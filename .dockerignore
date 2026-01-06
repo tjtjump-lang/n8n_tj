@@ -1,27 +1,17 @@
-# Whitelist approach: ignore everything, then allow only what Docker builds need
-# This reduces build context from ~900MB to just what's required
-
-# Ignore everything first
+# Ignore everything
 *
 
-# === n8n main image (docker/images/n8n/Dockerfile) ===
+# ✅ 明確加入我們需要的 CLI 套件
+!packages
+!packages/**
+!packages/cli
+!packages/cli/**
+
+# ✅ 保留 build 成果與授權文件
 !compiled
 !compiled/**
 !THIRD_PARTY_LICENSES.md
 
-# === runners image (docker/images/runners/Dockerfile + Dockerfile.distroless) ===
-!dist
-!dist/task-runner-javascript
-!dist/task-runner-javascript/**
-!packages
-!packages/@n8n
-!packages/@n8n/task-runner-python
-!packages/@n8n/task-runner-python/**
-
-# === Docker build files (entrypoints, configs) ===
+# ✅ 保留 Docker 建構必要資料
 !docker
-!docker/images
-!docker/images/n8n
-!docker/images/n8n/docker-entrypoint.sh
-!docker/images/runners
-!docker/images/runners/n8n-task-runners.json
+!docker/**
